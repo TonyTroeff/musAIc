@@ -22,6 +22,12 @@ Setup:
 2. Start both apps: `npm run dev` in `backend/` and in `frontend/`.
 3. Open http://localhost:8080 and sign in with Spotify. `GET /api/me` returns your Clerk user id and Spotify profile.
 
+For listening history, include `user-read-recently-played` in the Spotify OAuth scopes configured
+for the Clerk Spotify connection. Existing users may need to reconnect Spotify to grant this scope.
+See [Spotify's recently played endpoint](https://developer.spotify.com/documentation/web-api/reference/get-recently-played).
+Signed-in users see their latest 50 listening events on the home page, newest first, grouped by their
+local calendar day. `GET /api/recently-played` returns these events; repeated listens remain separate.
+
 ## Type checking and builds
 
 Run `npm install` in both folders to install their dependencies.
@@ -30,4 +36,5 @@ Run `npm install` in both folders to install their dependencies.
 - Run `npm run build` in `frontend/` to check types and build the Vite app into `dist/`.
 - Run `npm run build` in `backend/` to compile the API into `dist/`, then `npm start` to run it. `npm run dev` runs the TypeScript source with automatic restart.
 
-The `/api/me` response contract lives in `backend/src/types/api.ts`; the frontend imports it as a type only.
+The `/api/me` and `/api/recently-played` response contracts live in `backend/src/types/api.ts`;
+the frontend imports them as types only.

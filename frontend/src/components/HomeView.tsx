@@ -5,6 +5,7 @@ interface HomeViewProps {
   accountAction: ReactNode;
   welcomeAction?: ReactNode;
   profile?: ReactNode;
+  activity?: ReactNode;
 }
 
 const features = [
@@ -13,7 +14,7 @@ const features = [
   { number: '03', title: 'Start with a connection', description: 'Sign in with Spotify to bring your profile into musAIc.', color: '#F4E6BE' },
 ];
 
-export default function HomeView({ accountAction, welcomeAction, profile }: HomeViewProps) {
+export default function HomeView({ accountAction, welcomeAction, profile, activity }: HomeViewProps) {
   return (
     <Container maxWidth="lg" data-cy="home" sx={{ py: { xs: 3, md: 5 } }}>
       <Box component="header" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
@@ -24,6 +25,7 @@ export default function HomeView({ accountAction, welcomeAction, profile }: Home
         {accountAction}
       </Box>
       <Box component="main">
+        {activity && <Box sx={{ mt: 5 }}>{activity}</Box>}
         <Paper component="section" aria-label="Welcome to musAIc" sx={{ mt: 5, p: { xs: 3, md: 7 }, bgcolor: '#F3E7D8', overflow: 'hidden' }}>
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1.4fr 1fr' }, alignItems: 'center', gap: 4 }}>
             <Stack spacing={3} sx={{ alignItems: 'flex-start' }}>
