@@ -1,17 +1,27 @@
 ---
 name: code-style-best-practices
-description: Style preferences for JavaScript code in this project. Use whenever writing, editing, or reviewing JS/JSX code so new code matches the house style.
+description: Code-style preferences for this project's frontend and backend. Use whenever writing, editing, or reviewing TS/TSX/JS/JSX code.
 ---
 
-# JS best practices
+# TypeScript and code-style best practices
 
-Style preferences for all JavaScript/JSX code in this project (`frontend/` and `backend/`). Apply them to new code and to any lines you touch; don't reformat unrelated code just to comply.
+Style preferences for all TypeScript/TSX and remaining JavaScript/JSX code in this project (`frontend/` and `backend/`). Apply them to new code and to any lines you touch; don't reformat unrelated code just to comply.
+
+## Prefer TypeScript
+
+- Use TypeScript wherever the frontend or backend tooling supports it, including configuration and Cypress support/spec files. Use `.ts` for code without JSX, `.tsx` for React components containing JSX, and `.d.ts` for declarations.
+- Keep strict type checking enabled. Prefer inferred types for obvious local values and explicit types for API contracts, function boundaries, nullable state, and external data.
+- Use `import type` for imports used only as types. Use `.js` extensions in backend relative imports so emitted Node ESM runs correctly; use extensionless imports with the frontend's bundler resolution.
+- Avoid explicit `any`, unchecked non-null assertions, and suppressions to bypass errors. Use `unknown` and narrow it when handling errors or untrusted values. Type annotations alone do not validate external data at runtime.
+- Reuse API contract types between the backend and frontend when practical; keep frontend imports of backend contracts type-only so server code is never bundled into the browser.
+- Use JavaScript only when an actual tool or runtime constraint requires it. Do not introduce new JS/JSX files when TypeScript is supported.
+- Run each affected package's `npm run typecheck` and `npm run build` after a migration or changes to types/configuration.
 
 ## No curly braces for single-statement bodies
 
 When the body of an `if`, `else`, `for`, `for...of`, `for...in`, or `while` is a single statement, omit the braces. Keep it on the same line when it fits; otherwise put it on the next line, indented.
 
-```jsx
+```tsx
 // ✅ Preferred
 if (!res.ok) throw new Error(`Request failed (${res.status})`);
 if (error) return <p role="alert">{error}</p>;
@@ -22,7 +32,7 @@ if (isLoading) return <Spinner label="Loading your library…" size="large" />;
 else return <Library items={items} />;
 ```
 
-```jsx
+```tsx
 // ❌ Avoid
 if (!res.ok) {
     throw new Error(`Request failed (${res.status})`);
@@ -42,12 +52,12 @@ Keep the braces when:
 
 For arrow functions, prefer the concise body when the function just returns an expression:
 
-```jsx
+```tsx
 // ✅ Preferred
-const getTitle = (track) => track.name;
+const getTitle = (track: { name: string }) => track.name;
 
 // ❌ Avoid
-const getTitle = (track) => {
+const getTitle = (track: { name: string }) => {
     return track.name;
 };
 ```

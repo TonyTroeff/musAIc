@@ -1,7 +1,8 @@
 import { getAuth } from '@clerk/express';
+import type { RequestHandler } from 'express';
 
 // API-friendly guard: responds with 401 JSON instead of redirecting to sign-in.
-export default function requireUser(req, res, next) {
+const requireUser: RequestHandler = (req, res, next) => {
   const { isAuthenticated, userId } = getAuth(req);
 
   if (!isAuthenticated) {
@@ -9,6 +10,8 @@ export default function requireUser(req, res, next) {
     return;
   }
 
-  req.userId = userId;
+  res.locals.userId = userId;
   next();
-}
+};
+
+export default requireUser;

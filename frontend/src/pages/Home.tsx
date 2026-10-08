@@ -1,5 +1,5 @@
 import { Show, SignInButton, UserButton } from '@clerk/react';
-import SpotifyProfile from '../components/SpotifyProfile.jsx';
+import SpotifyProfile from '../components/SpotifyProfile';
 
 export default function Home() {
   return (

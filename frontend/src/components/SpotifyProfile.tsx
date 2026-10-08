@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import type { MeResponse, ApiError } from '../../../backend/src/types/api';
 
 export default function SpotifyProfile() {
-  const [me, setMe] = useState(null);
-  const [error, setError] = useState(null);
+  const [me, setMe] = useState<MeResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let ignore = false;
@@ -10,12 +11,17 @@ export default function SpotifyProfile() {
     // Same origin: the Clerk session cookie is sent automatically.
     fetch('/api/me')
       .then(async (res) => {
-        const body = await res.json();
-        if (!res.ok) throw new Error(body.error ?? `Request failed (${res.status})`);
+        if (!res.ok) {
+          const body: ApiError = await res.json();
+          throw new Error(body.error ?? `Request failed (${res.status})`);
+        }
+        const body: MeResponse = await res.json();
         return body;
       })
       .then((body) => !ignore && setMe(body))
-      .catch((err) => !ignore && setError(err.message));
+      .catch((err: unknown) => {
+        if (!ignore) setError(err instanceof Error ? err.message : 'Unknown error');
+      });
 
     return () => {
       ignore = true;
