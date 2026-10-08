@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "musAIc backend - Express API",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "start": "node --env-file=.env.local src/server.js",
+    "dev": "node --watch --env-file=.env.local src/server.js"
   },
   "author": "",
   "license": "ISC",
   "type": "module",
   "private": true,
   "dependencies": {
+    "@clerk/express": "^2.1.77",
     "express": "^5.2.1"
   }
 }
