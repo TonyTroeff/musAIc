@@ -1,3 +1,4 @@
+import '@pixsame/cypress-plugin-visual-regression-diff';
 import { mount } from 'cypress/react';
 
 declare global {
