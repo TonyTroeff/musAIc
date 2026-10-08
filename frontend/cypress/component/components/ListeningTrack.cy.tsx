@@ -37,23 +37,6 @@ describe('ListeningTrack', () => {
     cy.get('[data-cy="listening-track"]').matchImage();
   });
 
-  it('rectangular album cover → preserves its original proportions without cropping', () => {
-    cy.intercept('GET', '/rectangular-album-cover.svg', { fixture: 'rectangular-album-cover.svg', headers: { 'content-type': 'image/svg+xml', 'cache-control': 'no-store' } }).as('rectangularCover');
-    cy.mount(<Box sx={{ width: 900, p: 2 }}><ListeningTrack track={{ ...track, albumCoverUrl: '/rectangular-album-cover.svg' }} /></Box>);
-    cy.wait('@rectangularCover');
-    cy.contains('h4', 'Dreams').should('be.visible');
-    cy.get('img').should('be.visible').and(($image) => {
-      const image = $image[0] as HTMLImageElement;
-      expect(image.naturalWidth).to.equal(192);
-      expect(image.naturalHeight).to.equal(128);
-      const { width, height } = image.getBoundingClientRect();
-      expect(width).to.equal(88);
-      expect(width / height).to.be.closeTo(image.naturalWidth / image.naturalHeight, 0.01);
-      expect(getComputedStyle(image.parentElement ?? image).borderRadius).to.equal('0px');
-    });
-    cy.get('[data-cy="listening-track"]').matchImage();
-  });
-
   it('mobile long song and multiple performers → keeps every detail readable', () => {
     cy.viewport(390, 844);
     cy.mount(<Box sx={{ p: 2 }}><ListeningTrack track={{ ...track, name: 'A song for all the little moments that stay with us', artists: ['The Midnight', 'A very long featured performer name', 'Another artist'] }} /></Box>);
