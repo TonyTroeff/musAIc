@@ -1,0 +1,22 @@
+{
+  "name": "musaic-frontend",
+  "version": "1.0.0",
+  "description": "musAIc frontend - React SPA",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "cy:open": "cypress open --component",
+    "cy:run:component": "cypress run --component"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "cypress": "^16.1.1",
+    "vite": "^8.3.4"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "musaic-backend",
+  "version": "1.0.0",
+  "description": "musAIc backend - Express API",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
